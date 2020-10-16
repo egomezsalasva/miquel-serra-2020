@@ -123,25 +123,39 @@ import { contentfulClient } from  './contentfulClient'
           ul{
 
             li{
-              display: flex;
-              margin-bottom: 20px;
-              list-style: none;
-              cursor: pointer;
-              font-size: 0.75rem;
-              line-height: 1.125rem;
-
-              &:hover::before{
-                  content: "○ ";
-              }
-
-              &::before{
-                  content: "● ";
-                  margin-right: 5px;
-              }
-
 
               .title{
-                font-size: 0.75rem; 
+                display: flex;
+                margin-bottom: 20px;
+                list-style: none;
+                cursor: pointer;
+                font-size: 0.75rem;
+                line-height: 1.125rem;
+
+                &:hover::before{
+                    content: "● ";
+                    color: #ABBDFF;
+                }
+
+                &::before{
+                    content: "○ ";
+                    margin-right: 5px;
+                }
+
+                span{
+                  font-size: 0.75rem; 
+                }
+              }
+
+              .titleActive{
+                &::before{
+                    content: "● ";
+                    margin-right: 5px;
+                }
+                &:hover::before{
+                    content: "● ";
+                    color: #020301;
+                }
               }
             }
           }

@@ -11,7 +11,9 @@ const Title = ({contentfulEntryProp, routeProp}) => {
     const { title, orderId } = contentfulEntryProp.fields
     
     return (
-        <NavLink to={`/${routeProp}/${orderId}`} className="title">{title}</NavLink>
+        <NavLink to={`/${routeProp}/${orderId}`} className="title" activeClassName="titleActive">
+            <span>{title}</span>
+        </NavLink>
     )
 }
 export default Title
