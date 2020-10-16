@@ -210,7 +210,7 @@ const App = () => {
     // STATE
       const [publicationsEntries, setPublicationsEntries] = useState(null)
       const [publicationsLoading, setPublicationsLoading] = useState(true)
-      const [publicationsLength, setPublicationsLenght] = useState(null)
+      const [publicationsLength, setPublicationsLength] = useState(null)
       const [publicationsArrayLengthLoading, setPublicationsArrayLengthLoading] = useState(true)
     // 
 
@@ -226,7 +226,7 @@ const App = () => {
     // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
       useEffect(() => {
         if( publicationsLoading === false){
-          setPublicationsLenght(publicationsEntries.length - 1)
+          setPublicationsLength(publicationsEntries.length - 1)
           setPublicationsArrayLengthLoading(false)
         }
       }, [ publicationsLoading, publicationsEntries ])
@@ -236,6 +236,120 @@ const App = () => {
       let PublicationsRedirect = () =>{
         if (publicationsArrayLengthLoading === false) {
           return <Redirect to={`/publications/${publicationsLength}`} />;
+        }
+        return 0;
+      }
+    // 
+
+  //
+
+  // CV REROUTING
+
+    // STATE
+      const [cvEntries, setCvEntries] = useState(null)
+      const [cvLoading, setCvLoading] = useState(true)
+      const [cvLength, setCvLength] = useState(null)
+      const [cvArrayLengthLoading, setCvArrayLengthLoading] = useState(true)
+    // 
+
+    // FILTER BY PUBLICATIONS (ONCE DATA IS LOADED)
+      useEffect(() => {
+        if( loading === false){
+          setCvEntries(allEntries.filter( entry =>  entry.sys.contentType.sys.id === "cv"))
+          setCvLoading(false)
+        }
+      }, [ loading, allEntries ])
+    // 
+
+    // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
+      useEffect(() => {
+        if( cvLoading === false){
+          setCvLength(cvEntries.length - 1)
+          setCvArrayLengthLoading(false)
+        }
+      }, [ cvLoading, cvEntries ])
+    // 
+
+    // CONDITIONAL RENDERING
+      let CvRedirect = () =>{
+        if (cvArrayLengthLoading === false) {
+          return <Redirect to={`/cv/${cvLength}`} />;
+        }
+        return 0;
+      }
+    // 
+
+  //
+
+  // NETWORK REROUTING
+
+    // STATE
+      const [networkEntries, setNetworkEntries] = useState(null)
+      const [networkLoading, setNetworkLoading] = useState(true)
+      const [networkLength, setNetworkLength] = useState(null)
+      const [networkArrayLengthLoading, setNetworkArrayLengthLoading] = useState(true)
+    // 
+
+    // FILTER BY PUBLICATIONS (ONCE DATA IS LOADED)
+      useEffect(() => {
+        if( loading === false){
+          setNetworkEntries(allEntries.filter( entry =>  entry.sys.contentType.sys.id === "network"))
+          setNetworkLoading(false)
+        }
+      }, [ loading, allEntries ])
+    // 
+
+    // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
+      useEffect(() => {
+        if( networkLoading === false){
+          setNetworkLength(networkEntries.length - 1)
+          setNetworkArrayLengthLoading(false)
+        }
+      }, [ networkLoading, networkEntries ])
+    // 
+
+    // CONDITIONAL RENDERING
+      let NetworkRedirect = () =>{
+        if (networkArrayLengthLoading === false) {
+          return <Redirect to={`/network/${networkLength}`} />;
+        }
+        return 0;
+      }
+    // 
+
+  //
+
+  // CONTACT REROUTING
+
+    // STATE
+      const [contactEntries, setContactEntries] = useState(null)
+      const [contactLoading, setContactLoading] = useState(true)
+      const [contactLength, setContactLength] = useState(null)
+      const [contactArrayLengthLoading, setContactArrayLengthLoading] = useState(true)
+    // 
+
+    // FILTER BY PUBLICATIONS (ONCE DATA IS LOADED)
+      useEffect(() => {
+        if( loading === false){
+          setContactEntries(allEntries.filter( entry =>  entry.sys.contentType.sys.id === "contact"))
+          setContactLoading(false)
+        }
+      }, [ loading, allEntries ])
+    // 
+
+    // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
+      useEffect(() => {
+        if( contactLoading === false){
+          setContactLength(contactEntries.length - 1)
+          setContactArrayLengthLoading(false)
+        }
+      }, [ contactLoading, contactEntries ])
+    // 
+
+    // CONDITIONAL RENDERING
+      let ContactRedirect = () =>{
+        if (contactArrayLengthLoading === false) {
+          return <Redirect to={`/contact/${contactLength}`} />;
         }
         return 0;
       }
@@ -283,34 +397,24 @@ const App = () => {
         <div className="right">
           <div className="contentWrapper">
 
-            <Route exact path="/">
-              <Home />
-            </Route>
+            <Route exact path="/"><Home/></Route>
 
-            <Route exact path="/publications">
-              <PublicationsRedirect /> 
-            </Route>
+            <Route exact path="/publications"><PublicationsRedirect/></Route>
             <Route path="/publications/:id">
               <Content filterTypeProp="publications"/>
             </Route>
 
-            <Route exact path="/cv">
-              <Redirect to="/cv/0" /> 
-            </Route>
+            <Route exact path="/cv"><CvRedirect/></Route>
             <Route path="/cv/:id">
               <Content filterTypeProp="cv"/>
             </Route>
 
-            <Route exact path="/network">
-              <Redirect to="/network/1" /> 
-            </Route>
+            <Route exact path="/network"><NetworkRedirect/></Route>
             <Route path="/network/:id">
               <Content filterTypeProp="network"/>
             </Route>
 
-            <Route exact path="/contact">
-              <Redirect to="/contact/1" /> 
-            </Route>
+            <Route exact path="/contact"><ContactRedirect/></Route>
             <Route path="/contact/:id">
               <Content filterTypeProp="contact"/>
             </Route> 
