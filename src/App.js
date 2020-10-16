@@ -103,9 +103,22 @@ import { contentfulClient } from  './contentfulClient'
         width: ${displayLeftWidth};
         height: 100%;
         background: #DBDDD9;
+        overflow: scroll;
+        border: 30px solid #DBDDD9;
+        border-right: 20px solid #DBDDD9;
+        &::-webkit-scrollbar {
+          width: 4px;
+          height: 100%;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #fff; 
+        }
+        &::-webkit-scrollbar-track {
+          background: transparent; 
+        }
 
         .titlesWrapper{
-          padding: 30px;
+          padding-right: 10px;
 
           ul{
 
