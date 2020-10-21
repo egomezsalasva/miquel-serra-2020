@@ -14,50 +14,53 @@ const TitleList = ({ filterTypeProp }) => {
     // STATES
         const [allEntries, setAllEntries] = useState(null)
         const [loading, setLoading] = useState(true)
-        const [filteredEntries, setFilteredEntries] = useState(null)
-        const [filterLoading, setFilterLoading] = useState(true)
-        const [sortedEntries, setSortedEntries] = useState(null)
-        const [sortedLoading, setSortedLoading] = useState(true)
+        // const [filteredEntries, setFilteredEntries] = useState(null)
+        // const [filterLoading, setFilterLoading] = useState(true)
+        // const [sortedEntries, setSortedEntries] = useState(null)
+        // const [sortedLoading, setSortedLoading] = useState(true)
         // const [markedData, setMarkedData] = useState(null)
     // 
 
     // FETCH DATA FROM CONTENTFUL
         useEffect(() => {
-            contentfulClient.getEntries()
+            contentfulClient.getEntries({
+                content_type: filterTypeProp,
+                order: "-fields.orderId"
+            })
             .then((response) => { 
                 setAllEntries(response.items)
                 setLoading(false)
             })
             .catch(console.error)
-        }, [])
+        }, [filterTypeProp])
     // 
 
     // FILTER BY TYPE (ONCE DATA IS LOADED)
-        useEffect(() => {
-            if( loading === false){
-                setFilteredEntries(allEntries.filter( entry =>  entry.sys.contentType.sys.id === filterTypeProp))
-                setFilterLoading(false)
-            }
-        }, [ loading, allEntries, filterTypeProp ])
+        // useEffect(() => {
+        //     if( loading === false){
+        //         setFilteredEntries(allEntries.filter( entry =>  entry.sys.contentType.sys.id === filterTypeProp))
+        //         setFilterLoading(false)
+        //     }
+        // }, [ loading, allEntries, filterTypeProp ])
     //
     
     //SORT BY ORDER ID (ONCE FILTERED DATA IS LOADED)
-        useEffect(() => {
-            if( filterLoading === false){
-                filteredEntries.sort(function(a, b){
-                    return a.fields.orderId === b.fields.orderId ? 0 : +(a.fields.orderId < b.fields.orderId) || -1 
-                })
-                setSortedEntries(filteredEntries)
-                setSortedLoading(false)
-            }
-        }, [ filterLoading, filteredEntries ])
+        // useEffect(() => {
+        //     if( filterLoading === false){
+        //         filteredEntries.sort(function(a, b){
+        //             return a.fields.orderId === b.fields.orderId ? 0 : +(a.fields.orderId < b.fields.orderId) || -1 
+        //         })
+        //         setSortedEntries(filteredEntries)
+        //         setSortedLoading(false)
+        //     }
+        // }, [ filterLoading, filteredEntries ])
     //
 
     return (
         <ul>
-            { sortedLoading === false 
+            { loading === false 
 
-            ? sortedEntries.map((entry, index) =>   
+            ? allEntries.map((entry, index) =>   
                 <li key={index}>
                     <Title contentfulEntryProp={entry} routeProp={filterTypeProp}/>
                 </li>
