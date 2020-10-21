@@ -24,8 +24,7 @@ const TitleList = ({ filterTypeProp }) => {
     // FETCH DATA FROM CONTENTFUL
         useEffect(() => {
             contentfulClient.getEntries({
-                content_type: filterTypeProp,
-                order: "-fields.orderId"
+                content_type: filterTypeProp, order: "-fields.orderId"
             })
             .then((response) => { 
                 setAllEntries(response.items)
