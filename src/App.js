@@ -1,19 +1,54 @@
 //IMPORTS
 //-Modules
 import React, { useState, useEffect } from 'react'
-import { Route, NavLink, Link, Redirect } from "react-router-dom"
+import { Route, NavLink, Link, Redirect, Switch } from "react-router-dom"
 import styled, { createGlobalStyle } from 'styled-components'
 //-Components
 import Home from './components/Home'
 import TitleList from './components/TitleList'
 import Content from './components/Content'
+import FourOFour from './components/FourOFour'
 //- Data
 import { contentfulClient } from  './contentfulClient'
+//-Fonts
+import GraebenbachRegEOT from './fonts/Grabenbach-Regular.eot'
+import GraebenbachRegWOFF from './fonts/Grabenbach-Regular.woff'
+import GraebenbachRegWOFF2 from './fonts/Grabenbach-Regular.woff2'
+import GraebenbachRegTTF from './fonts/Grabenbach-Regular.ttf'
+import GraebenbachRegSVG from './fonts/Grabenbach-Regular.svg'
+import GraebenbachMedEOT from './fonts/Grabenbach-Medium.eot'
+import GraebenbachMedWOFF from './fonts/Grabenbach-Medium.woff'
+import GraebenbachMedWOFF2 from './fonts/Grabenbach-Medium.woff2'
+import GraebenbachMedTTF from './fonts/Grabenbach-Medium.ttf'
+import GraebenbachMedSVG from './fonts/Grabenbach-Medium.svg'
+
 
 
 
 //STYLES
   const GlobalStyle = createGlobalStyle`
+    @font-face {
+      font-family: 'Graebenbach';
+      font-style: normal;
+      font-weight: 900;
+      src: url(${GraebenbachRegEOT});
+      src: url('${GraebenbachRegEOT}?#iefix') format('embedded-opentype'),
+          url(${GraebenbachRegWOFF}) format('woff'),
+          url(${GraebenbachRegWOFF2}) format('woff2'),  
+          url(${GraebenbachRegTTF}) format('truetype'),
+          url('${GraebenbachRegSVG}#Graphik-Black') format('svg');
+    }
+    @font-face {
+      font-family: 'Graebenbach';
+      font-style: normal;
+      font-weight: normal;  
+      src: url(${GraebenbachMedEOT});
+      src: url('${GraebenbachMedEOT}?#iefi') format('embedded-opentype'),
+          url(${GraebenbachMedWOFF}) format('woff'),
+          url(${GraebenbachMedWOFF2}) format('woff2'),
+          url(${GraebenbachMedTTF}) format('truetype'),
+          url('${GraebenbachMedSVG}#Graphik-Regular') format('svg');
+    }
     *{
       box-sizing: border-box;
       margin: 0;
@@ -240,7 +275,10 @@ const App = () => {
     // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
       useEffect(() => {
         if( publicationsLoading === false){
-          setPublicationsLength(publicationsEntries.length - 1)
+          // Find highest number
+          let entryOrderIdList = publicationsEntries.map( entrie => entrie.fields.orderId)
+          const biggestNumberOrderId = Math.max(...entryOrderIdList)
+          setPublicationsLength(biggestNumberOrderId)
           setPublicationsArrayLengthLoading(false)
         }
       }, [ publicationsLoading, publicationsEntries ])
@@ -278,7 +316,9 @@ const App = () => {
     // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
       useEffect(() => {
         if( cvLoading === false){
-          setCvLength(cvEntries.length - 1)
+          let entryOrderIdList = cvEntries.map( entrie => entrie.fields.orderId)
+          const biggestNumberOrderId = Math.max(...entryOrderIdList)
+          setCvLength(biggestNumberOrderId)
           setCvArrayLengthLoading(false)
         }
       }, [ cvLoading, cvEntries ])
@@ -316,7 +356,9 @@ const App = () => {
     // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
       useEffect(() => {
         if( networkLoading === false){
-          setNetworkLength(networkEntries.length - 1)
+          let entryOrderIdList = networkEntries.map( entrie => entrie.fields.orderId)
+          const biggestNumberOrderId = Math.max(...entryOrderIdList)
+          setNetworkLength(biggestNumberOrderId)
           setNetworkArrayLengthLoading(false)
         }
       }, [ networkLoading, networkEntries ])
@@ -354,7 +396,9 @@ const App = () => {
     // LENGTH OF ARRAY (ONCE PUBLICATIONS DATA IS LOADED)
       useEffect(() => {
         if( contactLoading === false){
-          setContactLength(contactEntries.length - 1)
+          let entryOrderIdList = contactEntries.map( entrie => entrie.fields.orderId)
+          const biggestNumberOrderId = Math.max(...entryOrderIdList)
+          setContactLength(biggestNumberOrderId)
           setContactArrayLengthLoading(false)
         }
       }, [ contactLoading, contactEntries ])
@@ -411,27 +455,32 @@ const App = () => {
         <div className="right">
           <div className="contentWrapper">
 
-            <Route exact path="/"><Home/></Route>
+            <Switch>
 
-            <Route exact path="/publications"><PublicationsRedirect/></Route>
-            <Route path="/publications/:id">
-              <Content filterTypeProp="publications"/>
-            </Route>
+              <Route exact path="/publications"><PublicationsRedirect/></Route>
+              <Route path="/publications/:id">
+                <Content filterTypeProp="publications"/>
+              </Route>
 
-            <Route exact path="/cv"><CvRedirect/></Route>
-            <Route path="/cv/:id">
-              <Content filterTypeProp="cv"/>
-            </Route>
+              <Route exact path="/cv"><CvRedirect/></Route>
+              <Route path="/cv/:id">
+                <Content filterTypeProp="cv"/>
+              </Route>
 
-            <Route exact path="/network"><NetworkRedirect/></Route>
-            <Route path="/network/:id">
-              <Content filterTypeProp="network"/>
-            </Route>
+              <Route exact path="/network"><NetworkRedirect/></Route>
+              <Route path="/network/:id">
+                <Content filterTypeProp="network"/>
+              </Route>
 
-            <Route exact path="/contact"><ContactRedirect/></Route>
-            <Route path="/contact/:id">
-              <Content filterTypeProp="contact"/>
-            </Route> 
+              <Route exact path="/contact"><ContactRedirect/></Route>
+              <Route path="/contact/:id">
+                <Content filterTypeProp="contact"/>
+              </Route> 
+
+              <Route exact path="/"><Home/></Route>
+
+              <Route><FourOFour /></Route>
+            </Switch>
 
           </div>
         </div>

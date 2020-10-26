@@ -43,7 +43,6 @@ const MarkdownStyl = styled.div`
 `
 
 
-
 const Content = ({filterTypeProp}) => {
 
     // STATES
@@ -86,7 +85,7 @@ const Content = ({filterTypeProp}) => {
     //FIND MATCHING [ORDER ID] WITH [ROUTE ID PARAMETER] (ONCE FILTERED DATA IS LOADED)
         useEffect(() => {
             if( filterLoading === false){
-                setCurrentEntry(filteredEntries.find( entry => entry.fields.orderId === paramNum).fields.content)
+                setCurrentEntry(filteredEntries.find( entry => entry.fields.orderId === paramNum ).fields.content)
                 setEntryLoading(false)
             }
         }, [filterLoading, filteredEntries, paramNum])
